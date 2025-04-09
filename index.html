@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Andres Alvarez - Portafolio Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        :root {
+            --main-bg: #e6e7ee;
+            --shadow-light: #ffffff;
+            --shadow-dark: #b8b9be;
+            --primary: #31344b;
+            --secondary: #5d5f7d;
+            --accent: #2d4cc8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--main-bg);
+            color: var(--primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 70px;
+            padding-bottom: 70px; /* Espacio para la barra de navegación inferior */
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .neu-element {
+            background-color: var(--main-bg);
+            border-radius: 15px;
+            box-shadow: 8px 8px 16px var(--shadow-dark), 
+                        -8px -8px 16px var(--shadow-light);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .neu-element:hover {
+            box-shadow: 6px 6px 12px var(--shadow-dark), 
+                      -6px -6px 12px var(--shadow-light);
+        }
+        
+        .neu-button {
+            background-color: var(--main-bg);
+            box-shadow: 5px 5px 10px var(--shadow-dark),
+                      -5px -5px 10px var(--shadow-light);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        
+        .neu-button:hover {
+            box-shadow: 3px 3px 6px var(--shadow-dark),
+                      -3px -3px 6px var(--shadow-light);
+        }
+        
+        .neu-button:active {
+            box-shadow: inset 3px 3px 6px var(--shadow-dark),
+                        inset -3px -3px 6px var(--shadow-light);
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--main-bg);
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
+        
+        .logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        #mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Barra de navegación inferior */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--main-bg);
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .bottom-nav-item i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .bottom-nav-item span {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .bottom-nav-item.active,
+        .bottom-nav-item:hover {
+            color: var(--accent);
+        }
+        
+        .bottom-nav-item .indicator {
+            height: 4px;
+            width: 4px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            margin-top: 3px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .bottom-nav-item.active .indicator {
+            opacity: 1;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            overflow: hidden;
+            box-shadow: 8px 8px 16px var(--shadow-dark), 
+                      -8px -8px 16px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: var(--accent);
+        }
+        
+        .accent-text {
+            color: var(--accent);
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .location i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .project-card {
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: inset 3px 3px 6px var(--shadow-dark),
+                        inset -3px -3px 6px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--accent);
+            overflow: hidden;
+        }
+        
+        .project-img.education {
+            color: #e74c3c;
+        }
+        
+        .project-img.physics {
+            color: #2ecc71;
+        }
+        
+        .project-img.philosophy {
+            color: #9b59b6;
+        }
+        
+        .project-img.math {
+            color: #f39c12;
+        }
+        
+        .project-img.newton {
+            color: #3498db;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background-color: var(--main-bg);
+            color: var(--accent);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            box-shadow: 3px 3px 5px var(--shadow-dark),
+                      -3px -3px 5px var(--shadow-light);
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+        
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 6px 6px 12px var(--shadow-dark),
+                      -6px -6px 12px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 16px var(--shadow-dark),
+                      -8px -8px 16px var(--shadow-light);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 6px 6px 12px var(--shadow-dark),
+                      -6px -6px 12px var(--shadow-light);
+        }
+        
+        .contact-info a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            word-break: break-word;
+        }
+        
+        .contact-info a:hover {
+            color: var(--accent);
+        }
+        
+        footer {
+            background: var(--main-bg);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 5px 5px 10px var(--shadow-dark),
+                      -5px -5px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 12px var(--shadow-dark),
+                      -6px -6px 12px var(--shadow-light);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--main-bg);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 5px 5px 10px var(--shadow-dark),
+                       -5px -5px 10px var(--shadow-light);
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsividad */
+        @media screen and (max-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: var(--main-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.4s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            #mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .projects-grid, .skills-container, .contact-grid {
+                gap: 20px;
+            }
+            
+            .skill-item {
+                width: 100px;
+            }
+            
+            .skill-icon {
+                font-size: 2rem;
+            }
+            
+            .back-to-top {
+                bottom: 80px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            /* Mostrar menú inferior en dispositivos móviles */
+            .bottom-nav {
+                display: flex;
+            }
+        }
+        
+        @media screen and (min-width: 769px) {
+            /* Ocultar menú inferior en pantallas grandes */
+            .bottom-nav {
+                display: none;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .hero-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-container {
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .bottom-nav-item span {
+                font-size: 0.7rem;
+            }
+        }
+        .logo img {
+  height: 40px;
+  width: auto;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+  <div class="logo">
+    <img src="https://raw.githubusercontent.com/AndresAlvarezmonvsyo/Portafolio/refs/heads/main/1744168492264.jpg" alt="Logo" style="height: 55px; width: 100px;">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+    <li><a href="#proyectos"><i class="fas fa-laptop-code"></i> Proyectos</a></li>
+    <li><a href="#habilidades"><i class="fas fa-tools"></i> Habilidades</a></li>
+    <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+  </ul>
+  <div id="mobile-menu">
+    <i class="fas fa-bars"></i>
+  </div>
+</nav>    </header>
+
+    <!-- Barra de navegación inferior para móviles -->
+    <div class="bottom-nav">
+        <a href="#inicio" class="bottom-nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+            <div class="indicator"></div>
+        </a>
+        <a href="#proyectos" class="bottom-nav-item">
+            <i class="fas fa-laptop-code"></i>
+            <span>Proyectos</span>
+            <div class="indicator"></div>
+        </a>
+        <a href="#habilidades" class="bottom-nav-item">
+            <i class="fas fa-tools"></i>
+            <span>Habilidades</span>
+            <div class="indicator"></div>
+        </a>
+        <a href="#contacto" class="bottom-nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contacto</span>
+            <div class="indicator"></div>
+        </a>
+    </div>
+
+    <section id="inicio" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-img">
+                <img src="https://raw.githubusercontent.com/AndresAlvarezmonvsyo/Portafolio/refs/heads/main/1744168498386.jpg" alt="Andres Avatar" class="circular-img">
+            </div>
+            <h1 class="fade-in">Hola, soy <span class="accent-text">Andres Alvarez </span></h1>
+            <div class="location fade-in">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Sucre, Cauca, Colombia</span>
+            </div>
+            <p class="fade-in">Desarrollador web front-end especializado en crear experiencias interactivas y educativas utilizando HTML, CSS, JavaScript y jQuery.</p>
+            <div class="fade-in">
+                <a href="#proyectos" class="neu-button">Ver mis proyectos</a>
+                <a href="#contacto" class="neu-button">Contactame</a>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+  .circular-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+} 
+</style>
+  <section id="proyectos">
+        <div class="container">
+            <h2 class="fade-in">Mis Proyectos</h2>
+            <p class="fade-in">He desarrollado una serie de aplicaciones educativas interactivas para diferentes áreas del conocimiento. Cada proyecto demuestra mis habilidades en desarrollo front-end y diseño de experiencias de aprendizaje.</p>
+            
+            <div class="projects-grid">
+                <div class="project-card neu-element fade-in">
+                    <div class="project-img education">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Juego de Ley de Hooker</h3>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Física</span>
+                    </div>
+                    <p>Aplicación educativa interactiva sobre la ley de elasticidad de Hooker. Permite a los estudiantes experimentar con los conceptos de forma visual y dinámica.</p>
+                    <a href="https://juegodeleydehooker-by-andres-alvarez.netlify.app/" target="_blank" class="neu-button">Ver proyecto</a>
+                </div>
+                
+                <div class="project-card neu-element fade-in">
+                    <div class="project-img physics">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3>Juego de Aerodinámica</h3>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Física</span>
+                    </div>
+                    <p>Simulación interactiva sobre los principios de aerodinámica. Los usuarios pueden manipular variables y observar los efectos en tiempo real.</p>
+                    <a href="https://juego-de-aerodinamica-byandresalvarez.netlify.app/" target="_blank" class="neu-button">Ver proyecto</a>
+                </div>
+                
+                <div class="project-card neu-element fade-in">
+                    <div class="project-img philosophy">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Juego de Filosofía</h3>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Educación</span>
+                    </div>
+                    <p>Plataforma interactiva para aprender conceptos filosóficos a través de juegos y actividades dinámicas. Ideal para estudiantes de todos los niveles.</p>
+                    <a href="https://juego-de-filosofia-by-andres-alvarez.netlify.app/" target="_blank" class="neu-button">Ver proyecto</a>
+                </div>
+                
+                <div class="project-card neu-element fade-in">
+                    <div class="project-img math">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Juego de Matemáticas Básicas</h3>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">jQuery</span>
+                    </div>
+                    <p>Aplicación educativa con ejercicios interactivos de matemáticas básicas. Incluye diferentes niveles de dificultad y recompensas visuales.</p>
+                    <a href="https://juego-matematicas-basicas-by-aa.netlify.app/" target="_blank" class="neu-button">Ver proyecto</a>
+                </div>
+                
+                <div class="project-card neu-element fade-in">
+                    <div class="project-img newton">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3>Leyes de Newton</h3>
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Física</span>
+                    </div>
+                    <p>Simulador interactivo de las leyes del movimiento de Newton. Los usuarios pueden experimentar con fuerzas y observar los resultados de forma visual.</p>
+                    <a href="https://juego-de-fisica-leyes-de-newton-by-aa.netlify.app/" target="_blank" class="neu-button">Ver proyecto</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="habilidades">
+        <div class="container">
+            <h2 class="fade-in">Mis Habilidades</h2>
+            <p class="fade-in">Estas son las tecnologías y herramientas con las que trabajo para crear soluciones web educativas y atractivas.</p>
+            
+            <div class="skills-container">
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                    <div class="skill-name">HTML5</div>
+                </div>
+                
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                    <div class="skill-name">CSS3</div>
+                </div>
+                
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fab fa-js"></i></div>
+                    <div class="skill-name">JavaScript</div>
+                </div>
+                
+                <div class="skill-item fade-in">
+    <div class="skill-icon"><i class="fas fa-code"></i></div>
+    <div class="skill-name">jQuery</div>
+</div>
+                
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="skill-name">Responsive</div>
+                </div>
+                
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
+                    <div class="skill-name">Diseño UI</div>
+                </div>
+                
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="skill-name">E-learning</div>
+                </div>
+                
+                <div class="skill-item fade-in">
+                    <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
+                    <div class="skill-name">Neumorphism</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="container">
+            <h2 class="fade-in">Contacto</h2>
+            <p class="fade-in">¿Tenés un proyecto educativo en mente? ¡Hablemos! Estoy disponible para trabajo freelance y nuevas oportunidades.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-item neu-element fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Email</h3>
+                        <a href="mailto:julianmoncayo69@gmail.com">julianmoncayo69@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div class="contact-item neu-element fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Teléfono</h3>
+                        <a href="tel:+573108323786">+57 310 832 3786</a>
+                    </div>
+                </div>
+                
+                <div class="contact-item neu-element fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Ubicación</h3>
+                        <p>Sucre, Cauca, Colombia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 Andres Alvarez. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+    // Menú móvil
+    $('#mobile-menu').click(function() {
+        $('.nav-links').toggleClass('active');
+        $(this).toggleClass('active');
+
+        if ($(this).hasClass('active')) {
+            $(this).html('<i class="fas fa-times"></i>');
+        } else {
+            $(this).html('<i class="fas fa-bars"></i>');
+        }
+    });
+
+    // Navegación suave
+    $('a[href^="#"]').on('click', function(event) {
+        var href = this.getAttribute('href');
+        // Verificar si el href tiene un identificador de sección válido
+        if (href !== '#' && href !== '') {
+            var target = $(href);
+            if (target.length) {
+                event.preventDefault();
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 60 // Ajustar por la altura del header fijo
+                }, 800);
+
+                // Cerrar menú móvil si está abierto
+                if ($('#mobile-menu').hasClass('active')) {
+                    $('.nav-links').removeClass('active');
+                    $('#mobile-menu').removeClass('active').html('<i class="fas fa-bars"></i>');
+                }
+
+                // Actualizar clase activa en la navegación inferior
+                $('.bottom-nav-item').removeClass('active');
+                $(this).closest('.bottom-nav-item').addClass('active');
+                $('.bottom-nav-item .indicator').css('opacity', 0);
+                $(this).closest('.bottom-nav-item').find('.indicator').css('opacity', 1);
+            }
+        } else {
+            // Si el href es solo "#" o vacío, no intentes hacer scroll
+            event.preventDefault();
+        }
+    });
+
+    // Mostrar/ocultar botón de "Volver arriba"
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').addClass('visible');
+        } else {
+            $('.back-to-top').removeClass('visible');
+        }
+    });
+
+    // Volver arriba al hacer clic
+    $('.back-to-top').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 500);
+    });
+
+    // Función para observar la aparición de elementos con la clase 'fade-in'
+    function checkFadeIn() {
+        $('.fade-in').each(function() {
+            var elementTop = $(this).offset().top;
+            var elementBottom = elementTop + $(this).outerHeight();
+            var viewportTop = $(window).scrollTop();
+            var viewportBottom = viewportTop + $(window).height();
+
+            if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                $(this).addClass('appear');
+            }
+        });
+    }
+
+    // Ejecutar la función al cargar la página y al hacer scroll
+    $(window).on('load scroll resize', checkFadeIn);
+
+    // Mantener activa la sección actual en la navegación inferior al hacer scroll
+    $(window).scroll(function() {
+        var scrollPosition = $(window).scrollTop() + 70; // Ajustar por la altura del header
+
+        $('section').each(function() {
+            var sectionTop = $(this).offset().top;
+            var sectionBottom = sectionTop + $(this).outerHeight();
+            var sectionId = $(this).attr('id');
+            var correspondingNavItem = $('.bottom-nav-item a[href="#' + sectionId + '"]').parent();
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                $('.bottom-nav-item').removeClass('active');
+                $('.bottom-nav-item .indicator').css('opacity', 0);
+                correspondingNavItem.addClass('active');
+                correspondingNavItem.find('.indicator').css('opacity', 1);
+            }
+        });
+    });
+
+    // Inicializar la navegación inferior con la sección "inicio" activa
+    $('.bottom-nav-item a[href="#inicio"]').parent().addClass('active');
+    $('.bottom-nav-item a[href="#inicio"]').parent().find('.indicator').css('opacity', 1);
+});
+
+    </script>
+</body>
+
+</html>
+    
